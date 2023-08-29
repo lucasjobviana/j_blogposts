@@ -52,5 +52,4 @@ const mapMsgErrorToStatus = (errorMessage = '') =>
 || error409(errorMessage) 
 || error401(errorMessage) 
 || error404(errorMessage);
-
 module.exports = { mapMsgErrorToStatus };

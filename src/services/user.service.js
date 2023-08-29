@@ -45,10 +45,17 @@ const createUser = async (user) => {
     const { password, ...userWithOutPassword } = createdUser.dataValues;
     return getNewToken(userWithOutPassword);
 };
+
+const deleteUser = async (id) => {
+    const user = await User.findByPk(id);
+    if (!user) throw Error('User does not exist');
+    await User.destroy({ where: { id } });
+};
      
 module.exports = {
     login,
     createUser,
     getAllUsers,
     getUserById,
+    deleteUser,
 };
