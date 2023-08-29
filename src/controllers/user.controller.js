@@ -15,6 +15,12 @@ const getAllUsers = async (req, res, _next) => {
     return res.status(200).json(users);
 };
 
+const getUserById = async (req, res, _next) => {
+    const { id } = req.params;
+    const user = await userService.getUserById(id);
+    return res.status(200).json(user);
+};
+
 const createUser = async (req, res, _next) => {
     const token = await userService.createUser(req.body); 
     if (token) {
@@ -28,4 +34,5 @@ module.exports = {
     login,
     createUser,
     getAllUsers,
+    getUserById,
 };

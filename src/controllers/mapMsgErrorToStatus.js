@@ -34,11 +34,19 @@ const error401 = (errorMessage) => {
     }
 };
 
+const error404 = (errorMessage) => {
+    switch (errorMessage) {
+        case 'User does not exist':
+        return 404;
+        default:
+    }
+};
+
 const mapMsgErrorToStatus = (errorMessage = '') => 
    error400(errorMessage) 
 || error400User(errorMessage) 
 || error409(errorMessage) 
 || error401(errorMessage) 
-|| 666;
+|| error404(errorMessage);
 
 module.exports = { mapMsgErrorToStatus };

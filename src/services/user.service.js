@@ -18,6 +18,13 @@ const getUserByEmail = async (email) => {
     return user;
 };
 
+const getUserById = async (id) => {
+    const user = await User.findByPk(id);
+    if (!user) throw Error('User does not exist');
+    const { password, ...userWithOutPassword } = user.dataValues;
+    return userWithOutPassword;
+};
+
 const getAllUsers = async () => {
     const users = await User.findAll();
     const usersWithOutPassword = users.map((user) => {
@@ -38,8 +45,10 @@ const createUser = async (user) => {
     const { password, ...userWithOutPassword } = createdUser.dataValues;
     return getNewToken(userWithOutPassword);
 };
-     module.exports = {
+     
+module.exports = {
     login,
     createUser,
     getAllUsers,
+    getUserById,
 };
