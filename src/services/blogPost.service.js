@@ -75,6 +75,20 @@ const deletePost = async (id, userId) => {
     if (post.userId !== userId) throw new Error('Unauthorized user');
     await BlogPost.destroy({ where: { id } });
 };
+
+const getByQuery = async (q) => {
+    const posts = await BlogPost.findAll({
+        where: Sequelize.or(
+            { title: { [Sequelize.Op.like]: `%${q}%` } },
+            { content: { [Sequelize.Op.like]: `%${q}%` } },
+        ),
+        include: [
+            { model: Category, as: 'categories', through: { attributes: [] } },
+            { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        ],
+    });
+    return posts;
+};
      
 module.exports = {
     createPost,
@@ -82,4 +96,5 @@ module.exports = {
     getById,
     updatePost,
     deletePost,
+    getByQuery,
 };

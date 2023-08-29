@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 const { blogPostController } = require('../controllers');
 
+router.get('/search', blogPostController.getByQuery);
+
 router.get('/', blogPostController.getAll);
 
 router.post('/', blogPostController.createPost);
