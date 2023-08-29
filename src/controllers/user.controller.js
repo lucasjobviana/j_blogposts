@@ -10,6 +10,11 @@ const login = async (req, res, _next) => {
     }
 };
 
+const getAllUsers = async (req, res, _next) => {
+    const users = await userService.getAllUsers();
+    return res.status(200).json(users);
+};
+
 const createUser = async (req, res, _next) => {
     const token = await userService.createUser(req.body); 
     if (token) {
@@ -22,4 +27,5 @@ const createUser = async (req, res, _next) => {
 module.exports = {
     login,
     createUser,
+    getAllUsers,
 };

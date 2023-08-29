@@ -25,10 +25,11 @@ const error409 = (errorMessage) => {
     }
 };
 
-const error404 = (errorMessage) => {
+const error401 = (errorMessage) => {
     switch (errorMessage) {
-        case '_Product not found': 
-        return 404;
+        case 'Token not found':
+        case 'Expired or invalid token': 
+        return 401;
         default: 
     }
 };
@@ -37,7 +38,7 @@ const mapMsgErrorToStatus = (errorMessage = '') =>
    error400(errorMessage) 
 || error400User(errorMessage) 
 || error409(errorMessage) 
-|| error404(errorMessage) 
+|| error401(errorMessage) 
 || 666;
 
 module.exports = { mapMsgErrorToStatus };
