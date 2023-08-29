@@ -3,6 +3,7 @@ const error400 = (errorMessage) => {
         case '"displayName" length must be at least 8 characters long':
         case '"password" length must be at least 6 characters long':
         case '"email" must be a valid email':
+        case '"name" is required':
         return 400;
         default: 
     }
