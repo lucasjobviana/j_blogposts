@@ -6,6 +6,8 @@ const createCategorySchema = require('./createCategory.schema');
 const createCategoryValidator = require('./createCategory.validator');
 const createBlogPostSchema = require('./createBlogPost.schema');
 const createBlogPostValidator = require('./createBlogPost.validator');
+const updateBlogPostValidator = require('./updateBlogPost.validator');
+const updateBlogPostSchema = require('./updateBlogPost.schema');
 
 module.exports = {
     userLoginSchema,
@@ -16,4 +18,6 @@ module.exports = {
     createCategoryValidator,
     createBlogPostSchema,
     createBlogPostValidator,
+    updateBlogPostValidator,
+    updateBlogPostSchema,
 };

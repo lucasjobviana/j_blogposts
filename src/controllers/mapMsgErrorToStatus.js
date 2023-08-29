@@ -31,6 +31,7 @@ const error401 = (errorMessage) => {
     switch (errorMessage) {
         case 'Token not found':
         case 'Expired or invalid token': 
+        case 'Unauthorized user':
         return 401;
         default: 
     }

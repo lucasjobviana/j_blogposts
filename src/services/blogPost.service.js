@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const { BlogPost, Category, User, PostCategory: pc } = require('../models');
-const { createBlogPostValidator } = require('./validations');
+const { createBlogPostValidator, updateBlogPostValidator } = require('./validations');
 const config = require('../config/config');
 
 const env = process.env.NODE_ENV || 'development';
@@ -58,9 +58,21 @@ const getById = async (id) => {
     if (!post) throw new Error('Post does not exist');
     return post;
 };
+
+const updatePost = async (id, title, content, userId) => {
+    console.log(id, title, content);
+    const post = await BlogPost.findOne({ where: { id } });
+    // if (!post) throw new Error('Post does not exist');
+    if (post.userId !== userId) throw new Error('Unauthorized user');
+    updateBlogPostValidator({ title, content });
+    await BlogPost.update({ title, content }, { where: { id } });
+    const retorno = await getById(id);
+    return retorno;
+};
      
 module.exports = {
     createPost,
     getAll,
     getById,
+    updatePost,
 };
