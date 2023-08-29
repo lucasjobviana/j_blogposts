@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { blogPostController } = require('../controllers');
 
-// router.get('/', blogPostController.getAllO);
+router.get('/', blogPostController.getAll);
 
 router.post('/', blogPostController.createPost);
 
