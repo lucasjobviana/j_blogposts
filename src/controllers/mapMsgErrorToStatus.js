@@ -13,6 +13,7 @@ const error400User = (errorMessage) => {
     switch (errorMessage) {
         case 'Some required fields are missing':
         case 'Invalid fields':
+        case 'one or more "categoryIds" not found':
         return 400;
         default:
     }
