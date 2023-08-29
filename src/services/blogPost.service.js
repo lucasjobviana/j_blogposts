@@ -60,7 +60,6 @@ const getById = async (id) => {
 };
 
 const updatePost = async (id, title, content, userId) => {
-    console.log(id, title, content);
     const post = await BlogPost.findOne({ where: { id } });
     // if (!post) throw new Error('Post does not exist');
     if (post.userId !== userId) throw new Error('Unauthorized user');
@@ -69,10 +68,18 @@ const updatePost = async (id, title, content, userId) => {
     const retorno = await getById(id);
     return retorno;
 };
+
+const deletePost = async (id, userId) => {
+    const post = await BlogPost.findOne({ where: { id } });
+    if (!post) throw new Error('Post does not exist');
+    if (post.userId !== userId) throw new Error('Unauthorized user');
+    await BlogPost.destroy({ where: { id } });
+};
      
 module.exports = {
     createPost,
     getAll,
     getById,
     updatePost,
+    deletePost,
 };
