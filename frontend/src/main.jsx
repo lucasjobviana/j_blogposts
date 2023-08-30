@@ -1,16 +1,13 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
 import { AppRoutes } from './routes/index.tsx';
-import { ThemeProvider } from '@emotion/react';
-import { LightTheme } from './shared/themes';
-
-
+import { AppThemeProvider } from './shared/contexts/ThemeContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={LightTheme}>
+  <AppThemeProvider>
     <BrowserRouter>
       <AppRoutes /> 
     </BrowserRouter>
-  </ThemeProvider>,
+  </AppThemeProvider>
+  ,
 );
