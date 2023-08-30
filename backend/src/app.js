@@ -4,14 +4,16 @@ const { userRouter, loginRouter, categoryRouter, blogPostRouter } = require('./r
 const { mapMsgErrorToStatus } = require('./controllers/mapMsgErrorToStatus');
 const { verifyToken } = require('./middleware');
 const { userController } = require('./controllers');
+const cors = require('cors');
 
 const app = express();
+app.use(express.json());
 
+app.use(cors());
 app.get('/', (_request, response) => {
-  response.send();
+  response.json({ message: "Hello World by BlogApi's Get Method!" });
 });
 
-app.use(express.json());
 app.use('/login', loginRouter);
 app.post('/user', userController.createUser);
 app.use(verifyToken);
