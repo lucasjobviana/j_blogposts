@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getUser } from './backend_api/user';
-import './App.css'
 
 function App() {
   const [data, setData] = useState('Waiting for data...')
@@ -14,8 +13,6 @@ function App() {
   useEffect(() => {
      fetchData();
   }, []);
-
-
 
   return (
     <>

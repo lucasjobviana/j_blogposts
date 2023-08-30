@@ -8,7 +8,7 @@ const productController = require('../../../src/controllers/productController');
 // const app = require('../../../src/app');
 const { setServerLog } = require('../../../src/tools');
 
-setServerLog(false);
+setServerLog(false); // Desabilita os logs do servidor
 
 chai.use(chaiHttp);
 const { expect } = chai;    
