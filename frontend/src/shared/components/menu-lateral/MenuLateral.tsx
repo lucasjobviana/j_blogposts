@@ -56,7 +56,8 @@ export const MenuLateral: React.FC<IReactRCProps> = ({children}) => {
             <List component='nav' >
               {
                 drawerOptions.map((drawerOption,index) => (
-                  <ListItemLink key={`${index}_do`} to={drawerOption.path} 
+                  <ListItemLink key={`${index}_do`} 
+                    to={drawerOption.path} 
                     icon={(drawerOption.icon)} 
                     label={drawerOption.label} 
                     onClick={toggleDrawer} />

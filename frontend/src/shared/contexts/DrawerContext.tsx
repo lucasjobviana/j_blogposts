@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, { createContext, useCallback, useState, useContext, useEffect } from 'react';
 import { Home, Category, Person, Article, Info, Build } from '@mui/icons-material';
 
 const defaultDrawerOptions = [{
@@ -52,7 +52,11 @@ const DrawerContext = createContext({} as IDrawerContext);
 
 const DrawerProvider: React.FC<IDrawerProviderProps> = ({children}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<true | false>(false);
-  const [drawerOptions, setDrawerOptions] = useState<IDrawerOptions[]>(defaultDrawerOptions);
+  const [drawerOptions, setDrawerOptions] = useState<IDrawerOptions[]>([]);
+
+  useEffect(() => {
+    setDrawerOptions(defaultDrawerOptions);
+  },[]);
   
   const toggleDrawer = useCallback(() => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -60,7 +64,7 @@ const DrawerProvider: React.FC<IDrawerProviderProps> = ({children}) => {
 
   const handleSetDrawerOptions = useCallback((newDrawerOption: IDrawerOptions[]) => {
     setDrawerOptions(newDrawerOption);
-  }, [isDrawerOpen]); 
+  }, [drawerOptions]); 
 
   return (
     <DrawerContext.Provider value={{isDrawerOpen,toggleDrawer,drawerOptions,setDrawerOptions:handleSetDrawerOptions}}>
