@@ -1,13 +1,36 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material';
 import { Home } from '@mui/icons-material';
 import { useDrawerContext } from '../../contexts/DrawerContext';
+import { IReactRCProps } from '../../tools';
 
-interface IMenuLateralProps {
-  children: React.ReactNode;
+interface IListItemLinkProps {
+  to: string;
+  icon: React.ReactElement,
+  label: string,
+  onClick?: () => void | undefined;
 }
 
-export const MenuLateral: React.FC<IMenuLateralProps> = ({children}) => {
+const ListItemLink: React.FC<IListItemLinkProps> = ({to, icon, label, onClick}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(to);
+    onClick?.();
+  };
+
+  return (
+    <ListItemButton onClick={handleClick} >
+      <ListItemIcon>
+        {icon}
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+}; 
+
+export const MenuLateral: React.FC<IReactRCProps> = ({children}) => {
   const {isDrawerOpen, toggleDrawer}  = useDrawerContext();
   const theme = useTheme();
   const hasSmDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -25,12 +48,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({children}) => {
 
           <Box flex={1} display='flex' flexDirection='column' width='100%' >
             <List component='nav' >
-              <ListItemButton>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary='Home' />
-              </ListItemButton>
+              <ListItemLink to='/' icon={(<Home />)} label='Home' onClick={toggleDrawer} />
             </List> 
           </Box>
         </Box>

@@ -8,11 +8,11 @@ import { AppThemeProvider ,DrawerProvider } from './shared/contexts';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AppThemeProvider>
     <DrawerProvider>
-      <MenuLateral >
-        <BrowserRouter>
+      <BrowserRouter>
+        <MenuLateral >
           <AppRoutes /> 
-        </BrowserRouter>
-      </MenuLateral>
+        </MenuLateral>
+      </BrowserRouter>
     </DrawerProvider>
   </AppThemeProvider>
   ,
