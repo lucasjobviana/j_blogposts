@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 import { Avatar, Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material';
-import { Home, Category, Person, Article, Info, Build } from '@mui/icons-material';
 import { useDrawerContext } from '../../contexts/DrawerContext';
 import { IReactRCProps } from '../../tools';
+import { Button } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 
 interface IListItemLinkProps {
   to: string;
@@ -33,13 +34,16 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({to, icon, label, onClick}) 
 }; 
 
 export const MenuLateral: React.FC<IReactRCProps> = ({children}) => {
-  const {isDrawerOpen, toggleDrawer}  = useDrawerContext();
+  const {isDrawerOpen, toggleDrawer, drawerOptions}  = useDrawerContext();
   const theme = useTheme();
   const hasSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const menuSize = 30;
 
   return (
     <>
+      <Box  position='absolute' top='0px' width='100px' height='100px' display='flex' flexDirection='column'  zIndex={2} >
+        <Button variant='contained' color='inherit'  onClick={toggleDrawer} ><Menu /></Button>
+      </Box>
       <Drawer open={isDrawerOpen} variant={hasSmDown ? 'temporary':'permanent'} onClose={toggleDrawer} >
         <Box height={'100vh'} width={theme.spacing(menuSize)} display='flex' flexDirection='column' >
           <Box height={theme.spacing(16)} display='flex' alignItems='center' justifyContent='center' >
@@ -50,12 +54,14 @@ export const MenuLateral: React.FC<IReactRCProps> = ({children}) => {
 
           <Box flex={1} display='flex' flexDirection='column' width='100%' >
             <List component='nav' >
-              <ListItemLink to='/Blog' icon={(<Home />)} label='Blog' onClick={toggleDrawer} />
-              <ListItemLink to='/Postagens' icon={(<Article />)} label='Postagens' onClick={toggleDrawer} />
-              <ListItemLink to='/Categorias' icon={(<Category />)} label='Categorias' onClick={toggleDrawer} />
-              <ListItemLink to='/Perfil' icon={(<Person />)} label='Perfil' onClick={toggleDrawer} />
-              <ListItemLink to='/Configuracoes' icon={(<Build />)} label='Configurações' onClick={toggleDrawer} />
-              <ListItemLink to='/Sobre' icon={(<Info />)} label='Sobre o blog' onClick={toggleDrawer} />
+              {
+                drawerOptions.map((drawerOption,index) => (
+                  <ListItemLink key={`${index}_do`} to={drawerOption.path} 
+                    icon={(drawerOption.icon)} 
+                    label={drawerOption.label} 
+                    onClick={toggleDrawer} />
+                ))
+              }
             </List> 
           </Box>
         </Box>

@@ -1,14 +1,12 @@
 import { Button } from '@mui/material';
-import { Menu } from '@mui/icons-material';
-import { useThemeContext, useDrawerContext } from '../shared/contexts';
-
+import { useThemeContext } from '../shared/contexts';
+ 
 export const Main = () => {
   const { toggleTheme } = useThemeContext();
-  const { toggleDrawer } = useDrawerContext();
+  
   return (
     <>
       <Button variant='contained' color='primary' onClick={toggleTheme} >Theme</Button>
-      <Button variant='contained' color='primary' onClick={toggleDrawer} ><Menu /></Button>
     </>
   );
 };
