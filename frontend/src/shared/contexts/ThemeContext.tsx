@@ -13,35 +13,34 @@ interface IAppThemeProviderProps {
 
 const ThemeContext = createContext({} as IThemeContext);
 
-const AppThemeProvider: React.FC<IAppThemeProviderProps> = ({children}) => {
+const AppThemeProvider: React.FC<IAppThemeProviderProps> = ({ children }) => {
   const [themeName, setThemeName] = useState<'dark' | 'light'>('light');
 
-  
   const theme = useMemo(() => {
     return themeName === 'dark' ? LightTheme : DarkTheme;
   }, [themeName]);
-  
+
   const toggleTheme = useCallback(() => {
     setThemeName(themeName === 'dark' ? 'light' : 'dark');
-  }, [themeName]); 
+  }, [themeName]);
 
   return (
-    <ThemeContext.Provider value={{themeName,toggleTheme}}>
+    <ThemeContext.Provider value={{ themeName, toggleTheme }}>
       <ThemeProvider theme={theme}>
-        <Box  bgcolor={theme.palette.background.default}  sx={{height: '100vh', width:'100vw' }  }>
+        <Box  bgcolor={theme.palette.background.default}  sx={{ height: '100vh', width:'100vw' }  }>
           {children}
         </Box>
       </ThemeProvider>
     </ThemeContext.Provider>
-  ); 
+  );
 };
 
 const useThemeContext = () => {
   return useContext(ThemeContext);
 };
 
-export  { 
-  AppThemeProvider, 
+export  {
+  AppThemeProvider,
   useThemeContext,
   ThemeContext
 };

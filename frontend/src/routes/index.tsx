@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Blog,About,Categories,Config,Login,Posts,Profile } from '../pages';
- 
+import { Blog, About, Categories, Config, Login, Posts, Profile } from '../pages';
+
 export const AppRoutes = () => {
   return (
     <Routes>
@@ -14,5 +14,5 @@ export const AppRoutes = () => {
       <Route path="/Login" element={<Login />} />
       <Route path="*" element={<Navigate to="/Blog"  />} />
     </Routes>
-  );  
+  );
 };

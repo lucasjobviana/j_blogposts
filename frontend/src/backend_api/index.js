@@ -1,4 +1,4 @@
-const {getUser} = import('./user.js');
+const { getUser } = import('./user.js');
 
 export default {
   getUser

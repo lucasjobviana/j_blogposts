@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getUser } from './backend_api/user';
 
-function App() {
+function App () {
   const [data, setData] = useState('Waiting for data...');
 
   const fetchData = async () => {

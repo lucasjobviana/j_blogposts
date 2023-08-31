@@ -1,7 +1,6 @@
-const getUser = async () => { // (userId)
+const getUser = async () => {
   const token = 'tokenaleatorio';
   try {
-    // const user = { id: 1 };
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -9,12 +8,8 @@ const getUser = async () => { // (userId)
         'Content-Type': 'application/json',
       },
     };
-      
+
     const response = await fetch('http://localhost:3001/', requestOptions);
-    // if (!response.ok) {
-    //   throw new Error('Erro ao obter os dados da API.');
-    // }
-  
     const data = await response.json();
     console.log('Dados recebidos:', data);
     return data;

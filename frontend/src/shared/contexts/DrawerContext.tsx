@@ -1,34 +1,37 @@
 import React, { createContext, useCallback, useState, useContext, useEffect } from 'react';
 import { Home, Category, Person, Article, Info, Build } from '@mui/icons-material';
 
-const defaultDrawerOptions = [{
-  label: 'Home',
-  icon: <Home />,
-  path: '/'
-},{
-  label: 'Categorias',
-  icon: <Category />,
-  path: '/Categorias'
-},{
-  label: 'Postagens',
-  icon: <Article />,
-  path: '/Postagens'
-},{
-  label: 'Perfil',
-  icon: <Person />,
-  path: '/Perfil'
-},{
-  label: 'Configurações',
-  icon: <Build />,
-  path: '/Configuracoes'
-
-},{
-  label: 'Sobre o blog',
-  icon: <Info />,
-  path: '/Sobre'
-}
-
-
+const defaultDrawerOptions = [
+  {
+    label: 'Home',
+    icon: <Home />,
+    path: '/'
+  },
+  {
+    label: 'Categorias',
+    icon: <Category />,
+    path: '/Categorias'
+  },
+  {
+    label: 'Postagens',
+    icon: <Article />,
+    path: '/Postagens'
+  },
+  {
+    label: 'Perfil',
+    icon: <Person />,
+    path: '/Perfil'
+  },
+  {
+    label: 'Configurações',
+    icon: <Build />,
+    path: '/Configuracoes'
+  },
+  {
+    label: 'Sobre o blog',
+    icon: <Info />,
+    path: '/Sobre'
+  }
 ];
 
 interface IDrawerContext {
@@ -50,34 +53,35 @@ interface IDrawerOptions {
 
 const DrawerContext = createContext({} as IDrawerContext);
 
-const DrawerProvider: React.FC<IDrawerProviderProps> = ({children}) => {
+const DrawerProvider: React.FC<IDrawerProviderProps> = ({ children }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<true | false>(false);
   const [drawerOptions, setDrawerOptions] = useState<IDrawerOptions[]>([]);
 
   useEffect(() => {
     setDrawerOptions(defaultDrawerOptions);
-  },[]);
-  
+  }, []);
+
   const toggleDrawer = useCallback(() => {
     setIsDrawerOpen(!isDrawerOpen);
-  }, [isDrawerOpen]); 
+  }, [isDrawerOpen]);
 
   const handleSetDrawerOptions = useCallback((newDrawerOption: IDrawerOptions[]) => {
     setDrawerOptions(newDrawerOption);
-  }, [drawerOptions]); 
+  }, [drawerOptions]);
 
   return (
-    <DrawerContext.Provider value={{isDrawerOpen,toggleDrawer,drawerOptions,setDrawerOptions:handleSetDrawerOptions}}>
+    <DrawerContext.Provider value={{ isDrawerOpen, toggleDrawer, drawerOptions, setDrawerOptions:handleSetDrawerOptions }}>
       {children}
     </DrawerContext.Provider>
-  ); 
+  );
+
 };
 
 const useDrawerContext = () => {
   return useContext(DrawerContext);
 };
 
-export  { 
-  DrawerProvider, 
+export  {
+  DrawerProvider,
   useDrawerContext
 };
