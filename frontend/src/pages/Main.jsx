@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 import { useThemeContext, useDrawerContext } from '../shared/contexts';
 
 export const Main = () => {
@@ -7,7 +8,7 @@ export const Main = () => {
   return (
     <>
       <Button variant='contained' color='primary' onClick={toggleTheme} >Theme</Button>
-      <Button variant='contained' color='primary' onClick={toggleDrawer} >Menu</Button>
+      <Button variant='contained' color='primary' onClick={toggleDrawer} ><Menu /></Button>
     </>
   );
 };
