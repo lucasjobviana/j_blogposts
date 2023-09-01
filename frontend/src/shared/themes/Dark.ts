@@ -20,5 +20,9 @@ export const DarkTheme = createTheme({
       paper: '#303134',
       default: '#000',
     },
+    text: {
+      primary: '#fff',
+      disabled: '#f44336',
+    }
   },
 });

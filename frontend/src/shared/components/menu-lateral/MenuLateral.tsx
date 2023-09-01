@@ -3,8 +3,6 @@ import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 import { Avatar, Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material';
 import { useDrawerContext } from '../../contexts/DrawerContext';
 import { IReactRCProps } from '../../tools';
-import { Button } from '@mui/material';
-import { Menu } from '@mui/icons-material';
 
 interface IListItemLinkProps {
   to: string;
@@ -24,7 +22,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }
   };
 
   return (
-    <ListItemButton selected={!! match} onClick={handleClick} >
+    <ListItemButton selected={!!match} onClick={handleClick} >
       <ListItemIcon>
         {icon}
       </ListItemIcon>
@@ -41,9 +39,7 @@ export const MenuLateral: React.FC<IReactRCProps> = ({ children }) => {
 
   return (
     <>
-      <Box  position='absolute' top='0px' width='100px' height='100px' display='flex' flexDirection='column'  zIndex={2} >
-        <Button variant='contained' color='inherit'  onClick={toggleDrawer} ><Menu /></Button>
-      </Box>
+
       <Drawer open={isDrawerOpen} variant={hasSmDown ? 'temporary':'permanent'} onClose={toggleDrawer} >
         <Box height={'100vh'} width={theme.spacing(menuSize)} display='flex' flexDirection='column' >
           <Box height={theme.spacing(16)} display='flex' alignItems='center' justifyContent='center' >

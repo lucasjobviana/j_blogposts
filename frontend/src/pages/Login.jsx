@@ -1,12 +1,11 @@
-import { Button } from '@mui/material';
-import { useThemeContext } from '../shared/contexts';
+import { LayoutBase } from '../shared/layouts';
 
 export const Login = () => {
-  const { toggleTheme } = useThemeContext();
-
   return (
     <>
-      <Button variant='contained' color='primary' onClick={toggleTheme} >Theme</Button>
+      <LayoutBase title='Login' >
+       Conteúdo da página de Login
+      </LayoutBase>
     </>
   );
 };

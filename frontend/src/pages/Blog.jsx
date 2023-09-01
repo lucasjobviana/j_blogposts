@@ -1,12 +1,11 @@
-import { Button } from '@mui/material';
-import { useThemeContext } from '../shared/contexts';
+import { LayoutBase } from '../shared/layouts';
 
 export const Blog = () => {
-  const { toggleTheme } = useThemeContext();
-
   return (
     <>
-      <Button variant='contained' color='primary' onClick={toggleTheme} >Theme</Button>
+      <LayoutBase title='Blog: Coisas do Laiho' >
+       Conteúdo da página de Blog
+      </LayoutBase>
     </>
   );
 };

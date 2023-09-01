@@ -1,12 +1,11 @@
-import { Button } from '@mui/material';
-import { useThemeContext } from '../shared/contexts';
+import { LayoutBase } from '../shared/layouts';
 
 export const Config = () => {
-  const { toggleTheme } = useThemeContext();
-
   return (
     <>
-      <Button variant='contained' color='primary' onClick={toggleTheme} >Theme</Button>
+      <LayoutBase title='Configuração' >
+       Conteúdo da página de Configuração
+      </LayoutBase>
     </>
   );
 };
