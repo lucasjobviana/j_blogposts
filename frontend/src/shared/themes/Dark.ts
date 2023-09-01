@@ -22,7 +22,13 @@ export const DarkTheme = createTheme({
     },
     text: {
       primary: '#fff',
-      disabled: '#f44336',
-    }
+      secondary: '#fff',
+      disabled: '#fff',
+    },
+  },
+  typography: {
+    allVariants: {
+      color: 'white',
+    },
   },
 });
