@@ -1,0 +1,84 @@
+{
+    "settings": {
+        "react": {
+            "version": "18.2"
+        }
+    },
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "ignorePatterns": [
+        "node_modules/",
+        "dist/"
+    ],
+    "overrides": [
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+         "space-before-function-paren": [ 
+             "error",
+             "always"
+         ],// regra para nunca ter um espaço entre o nome da função e o parenteses
+        "space-before-blocks": [
+            "error",
+            "always"
+        ],// regra para sempre ter um espaço antes de um bloco
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],// regra para sempre ter um espaço depois da virgula
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ], // regra para sempre ter um espaço  depois do inicio do objeto
+        //regra para so ter uma linha vazia entre as funções e zero no final do arquivo
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 1,
+                "maxEOF": 0
+            }
+        ],
+        //regra para não ter espaço em branco no final da linha
+        "no-trailing-spaces": "error", 
+        //regra para não ter nenhuma linha vazia no final do arquivo
+
+         
+
+        
+        "react/react-in-jsx-scope": "off"
+    }
+}
