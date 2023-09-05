@@ -1,4 +1,5 @@
-import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, getCategoriesByName } from '../services/api';
+import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, getCategoriesByName,
+  createUser, login } from '../services/api';
 
 export const mapToDefaultStorage = (usingBD = true) => {
 
@@ -11,6 +12,8 @@ export const mapToDefaultStorage = (usingBD = true) => {
       case 'createCategory': return createCategory(functionParameter);
       case 'updateCategory': return updateCategory(functionParameter);
       case 'deleteCategory': return deleteCategory(functionParameter);
+      case 'createUser': return createUser(functionParameter);
+      case 'login': return login(functionParameter);
       default: return null;
       }
     }

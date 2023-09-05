@@ -22,6 +22,7 @@ const getUserById = async (req, res, _next) => {
 };
 
 const createUser = async (req, res, _next) => {
+    console.log('controller', req.body);
     const token = await userService.createUser(req.body); 
     if (token) {
         return res.status(201).json({

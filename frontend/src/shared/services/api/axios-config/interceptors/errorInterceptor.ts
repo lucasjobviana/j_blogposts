@@ -39,6 +39,7 @@ export const errorInterceptor = (error: AxiosError) => {
     switch (message) {
     case 'User does not exist': return Promise.reject(new Error('Este usuário não existe'));
     case 'Post does not exist': return Promise.reject(new Error('Este post não existe'));
+    case 'Category does not exist': return Promise.reject(new Error('Esta categoria não existe'));
     default:
     }
   }

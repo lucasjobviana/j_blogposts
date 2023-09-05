@@ -43,6 +43,7 @@ const error404 = (errorMessage) => {
     switch (errorMessage) {
         case 'User does not exist':
         case 'Post does not exist':
+        case 'Category does not exist':
         return 404;
         default:
     }

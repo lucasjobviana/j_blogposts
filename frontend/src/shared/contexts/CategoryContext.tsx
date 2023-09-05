@@ -38,7 +38,7 @@ export const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children })
   }, [categories]);
 
   const del = useCallback( (id: number) => {
-    console.log('delete category: ', id);
+    // const status = defaultStorage('deleteCategory', id);
   }, [categories]);
 
   const getAll = useCallback( () => {

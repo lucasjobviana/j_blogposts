@@ -36,11 +36,12 @@ const getAllUsers = async () => {
 };
 
 const createUser = async (user) => {
+    console.log('service', user);
     createUserValidator(user);
     const userExists = await getUserByEmail(user.email);
     if (userExists) throw Error('User already registered');
     const createdUser = await User.create({ 
-        password: user.password, email: user.email, name: user.name,
+        password: user.password, email: user.email, displayName: user.displayName, image: user.image
      });
     const { password, ...userWithOutPassword } = createdUser.dataValues;
     return getNewToken(userWithOutPassword);
