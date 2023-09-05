@@ -16,7 +16,7 @@ app.get('/', (_request, response) => {
 
 app.use('/login', loginRouter);
 app.post('/user', userController.createUser);
-app.use(verifyToken);
+// app.use(verifyToken);
 app.use('/user', userRouter);
 app.use('/categories', categoryRouter);
 app.use('/post', blogPostRouter);

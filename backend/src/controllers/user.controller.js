@@ -13,7 +13,7 @@ const login = async (req, res, _next) => {
 const getAllUsers = async (req, res, _next) => {
     const users = await userService.getAllUsers();
     return res.status(200).json(users);
-};
+}; 
 
 const getUserById = async (req, res, _next) => {
     const { id } = req.params;

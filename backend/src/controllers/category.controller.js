@@ -5,6 +5,13 @@ const getAllCategories = async (req, res, _next) => {
     return res.status(200).json(users);
 };
 
+const getCategoriesByName = async (req, res, _next) => {
+    console.log('Controller query: ',req.query);
+    const { search } = req.query;
+    const categories = await categoryService.getCategoriesByName(search);
+    return res.status(200).json(categories);
+};
+
 const createCategory = async (req, res, _next) => {
     const category = await categoryService.createCategory(req.body);
      
@@ -16,4 +23,5 @@ const createCategory = async (req, res, _next) => {
 module.exports = {
     getAllCategories,
     createCategory,
+    getCategoriesByName,
 };

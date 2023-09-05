@@ -1,9 +1,11 @@
 const error400 = (errorMessage) => {
+    console.log('errorMessage', errorMessage)
     switch (errorMessage) {
         case '"displayName" length must be at least 8 characters long':
         case '"password" length must be at least 6 characters long':
         case '"email" must be a valid email':
         case '"name" is required':
+        case '"name" is not allowed to be empty':
         return 400;
         default: 
     }
@@ -44,7 +46,7 @@ const error404 = (errorMessage) => {
         return 404;
         default:
     }
-};
+};//"\"name\" is not allowed to be empty
 
 const mapMsgErrorToStatus = (errorMessage = '') => 
    error400(errorMessage) 
