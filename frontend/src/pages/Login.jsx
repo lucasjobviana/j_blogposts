@@ -5,7 +5,7 @@ export const Login = () => {
   return (
     <>
       <LayoutBase title='Login' >
-       Conteúdo da página de Login
+       Login
       </LayoutBase>
     </>
   );
