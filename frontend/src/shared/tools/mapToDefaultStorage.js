@@ -3,7 +3,6 @@ import { getAllCategories, getCategoryById, createCategory, updateCategory, dele
 export const mapToDefaultStorage = (usingBD = true) => {
 
   const mapFunction = (functionName, functionParameter) => {
-    console.log('mapFunction', functionName, functionParameter);
     if (usingBD) {
       switch (functionName) {
       case 'getAllCategories': return getAllCategories(functionParameter);

@@ -19,15 +19,15 @@ interface ICategoryProviderProps extends IReactRCProps {
 
 const CategoryContext = createContext({} as ICategoryContext);
 
-const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
-  const saveOnMemory = mapToDefaultStorage();
+export const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
+  const defaultStorage = mapToDefaultStorage();
   const [categories, setCategories] = useState<ICategory[]|[]>([]);
 
   const create = useCallback( async (name='Nova Categoria') => {
     const category = new Category(name);
-    const newCategory = await saveOnMemory('createCategory', category);
+    const newCategory = await defaultStorage('createCategory', category);
     if(newCategory) {
-      setCategories((categories) => [...categories, { ...newCategory }]);
+      setCategories((categories) => [...categories, newCategory]);
       return true;
     }
     return false;
@@ -46,7 +46,7 @@ const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
   }, [categories]);
 
   const getByName = useCallback( async (name: string) => {
-    const categories = await saveOnMemory('getCategoriesByName', { search:name });
+    const categories = await defaultStorage('getCategoriesByName', { search:name });
     if(categories) {
       setCategories(categories);
       return true;
@@ -66,11 +66,6 @@ const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
 
 };
 
-const useCategoryContext = () => {
+export const useCategoryContext = () => {
   return useContext(CategoryContext);
-};
-
-export  {
-  CategoryProvider,
-  useCategoryContext
 };
