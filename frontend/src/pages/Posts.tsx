@@ -6,7 +6,6 @@ import { LayoutBase } from '../shared/layouts';
 import { J_ToolBar } from '../shared/components/tool-bar/';
 import { Category } from '../shared/Entities';
 import { useCategoryContext } from '../shared/contexts';
-import mapToDefaultStorage from '../shared/tools/mapToDefaultStorage';
 import { useDebounce } from '../shared/tools';
 
 const category = new Category('');
@@ -19,16 +18,14 @@ export const Posts = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
-  const saveOnMemory = mapToDefaultStorage();
   const categoryContext = useCategoryContext();
   const categories = categoryContext.categories;
 
   const getDataFromStorage = async (name) => {
     debounce(async ()=>{
       setIsLoading(true);
-      const categories = await saveOnMemory('getCategoriesByName', { search:name });
-      categoryContext.setCategories(categories);
-      setTimeout(() => setIsLoading(false), 1000);
+      const querySuccess =  await categoryContext.getByName(name);
+      setTimeout(() => setIsLoading(!querySuccess), 1000);
       console.log(categories);
     });
 
@@ -87,15 +84,6 @@ export const Posts = () => {
   const newExpenses = [...expenses.map((expense) => ({
     id: expense.id,
     name: expense.name,
-    // tag: expense.tag,
-    // method: expense.method,
-    // value: Number.parseFloat(expense.value).toFixed(2),
-    // currency: expense.exchangeRates[expense.currency].name,
-    // exchangeRates: Number.parseFloat(expense.exchangeRates[
-    //   expense.currency].ask).toFixed(2),
-    // convertedValue: (Number.parseFloat(expense.exchangeRates[
-    //   expense.currency].ask) * Number.parseFloat(expense.value)).toFixed(2),
-    // c: 'Real',
   }))];
 
   return (
@@ -106,7 +94,8 @@ export const Posts = () => {
         addLabelText='Nova Categoria'
         searchText={search}
         handleChangeSearchText={(texto) => setSearchParams({ search: texto }, { replace: true })}
-        handleClickAdd={() => saveOnMemory('createCategory', category)}
+        // handleClickAdd={() => saveOnMemory('createCategory', category)}
+        handleClickAdd={() => categoryContext.create('Nova Categoria')}
         saveButtonEnabled={isLoading}
         deleteButtonEnabled={isLoading}
       />}  >

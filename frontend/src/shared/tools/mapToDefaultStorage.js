@@ -1,6 +1,6 @@
 import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, getCategoriesByName } from '../services/api';
 
-const mapToDefaultStorage = (usingBD = true) => {
+export const mapToDefaultStorage = (usingBD = true) => {
 
   const mapFunction = (functionName, functionParameter) => {
     console.log('mapFunction', functionName, functionParameter);
@@ -24,5 +24,3 @@ const mapToDefaultStorage = (usingBD = true) => {
 
   return mapFunction;
 };
-
-export default mapToDefaultStorage;

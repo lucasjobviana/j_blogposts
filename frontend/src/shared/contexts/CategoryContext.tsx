@@ -1,15 +1,16 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 import { IReactRCProps } from '../tools';
 import { ICategory, Category } from '../Entities';
+import  { mapToDefaultStorage }  from '../tools';
 
 interface ICategoryContext  {
     categories: ICategory[] | [];
-    create: (id: number ) => void;
+    create: (name: string ) => Promise<boolean>;
     del: (id: number) => void;
     update: (category: Category) => void;
     getAll: () => void;
     getById: (id: number) => void;
-    getByName: (name: string) => void;
+    getByName: (name: string) => Promise<boolean>;
     setCategories: React.Dispatch<React.SetStateAction<ICategory[] | []>>;
 }
 
@@ -19,11 +20,17 @@ interface ICategoryProviderProps extends IReactRCProps {
 const CategoryContext = createContext({} as ICategoryContext);
 
 const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
+  const saveOnMemory = mapToDefaultStorage();
   const [categories, setCategories] = useState<ICategory[]|[]>([]);
 
-  const create = useCallback( () => {
-    const category = new Category('Nova Categoria');
-    setCategories((categories) => [...categories, category]);
+  const create = useCallback( async (name='Nova Categoria') => {
+    const category = new Category(name);
+    const newCategory = await saveOnMemory('createCategory', category);
+    if(newCategory) {
+      setCategories((categories) => [...categories, { ...newCategory }]);
+      return true;
+    }
+    return false;
   }, [categories]);
 
   const update = useCallback( (category: Category) => {
@@ -38,8 +45,13 @@ const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
     console.log('get all categories');
   }, [categories]);
 
-  const getByName = useCallback( (name: string) => {
-    console.log('get category by name: ', name);
+  const getByName = useCallback( async (name: string) => {
+    const categories = await saveOnMemory('getCategoriesByName', { search:name });
+    if(categories) {
+      setCategories(categories);
+      return true;
+    }
+    return false;
   }, [categories]);
 
   const getById = useCallback( (id: number) => {
