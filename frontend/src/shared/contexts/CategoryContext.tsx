@@ -9,6 +9,7 @@ interface ICategoryContext  {
     update: (category: Category) => void;
     getAll: () => void;
     getById: (id: number) => void;
+    getByName: (name: string) => void;
     setCategories: React.Dispatch<React.SetStateAction<ICategory[] | []>>;
 }
 
@@ -37,12 +38,16 @@ const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children }) => {
     console.log('get all categories');
   }, [categories]);
 
+  const getByName = useCallback( (name: string) => {
+    console.log('get category by name: ', name);
+  }, [categories]);
+
   const getById = useCallback( (id: number) => {
     console.log('get category by id: ', id);
   }, [categories]);
 
   return (
-    <CategoryContext.Provider value={{ categories, create, del, update, getAll, getById, setCategories  }}>
+    <CategoryContext.Provider value={{ categories, create, del, update, getAll, getById, getByName, setCategories  }}>
       {children}
     </CategoryContext.Provider>
   );

@@ -27,7 +27,7 @@ const AppThemeProvider: React.FC<IAppThemeProviderProps> = ({ children }) => {
   return (
     <ThemeContext.Provider value={{ themeName, toggleTheme }}>
       <ThemeProvider theme={theme}>
-        <Box  bgcolor={theme.palette.background.default}  sx={{ height: '100vh', width:'100vw' }  }>
+        <Box overflow={'auto'}  bgcolor={theme.palette.background.default}  sx={{ height: '100vh', width:'100vw', paddingBottom:'0px' }  }>
           {children}
         </Box>
       </ThemeProvider>

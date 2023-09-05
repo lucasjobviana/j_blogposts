@@ -19,9 +19,9 @@ export const LayoutBase: React.FC<ILayoutBaseProps> = ({ children, title, toolBa
   const isBiggerThanMD = !useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Box padding={2} height='100%' display='flex' flexDirection='column'  color={theme.palette.text.primary} gap={2} >
+    <Box padding={2} display='flex' flexDirection='column'  color={theme.palette.text.primary} gap={2} >
       <Box display={'flex'} height={
-        isBiggerThanSM ? isBiggerThanMD ? theme.spacing(12) : theme.spacing(10) : theme.spacing(8)
+        isBiggerThanSM ? isBiggerThanMD ? theme.spacing(6) : theme.spacing(4) : theme.spacing(2)
       }  justifyContent={'space-between'} alignItems={'center'} gap={2} >
 
         <Button disabled={isBiggerThanSM}  variant='contained' color='inherit'  onClick={toggleDrawer} ><Menu /></Button>
@@ -44,7 +44,7 @@ export const LayoutBase: React.FC<ILayoutBaseProps> = ({ children, title, toolBa
       {
         toolBar && <Box>{toolBar}</Box>
       }
-      <Box flex={1} overflow='auto' >{children}</Box>
+      <Box flex={1}  >{children}</Box>
     </Box>
   );
 };
