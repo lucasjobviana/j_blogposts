@@ -7,6 +7,7 @@ import { J_ToolBar } from '../shared/components/tool-bar';
 import { useCategoryContext } from '../shared/contexts';
 
 export const DetailCategory = () => {
+  const {  del } = useCategoryContext();
   const { id='nova' } = useParams<'id'>();
   const { create, } = useCategoryContext();
   const navigate = useNavigate();
@@ -20,6 +21,11 @@ export const DetailCategory = () => {
         deleteLabelText='Deletar'
         saveLabelText='Salvar'
         backTo='/Categorias'
+        handleClickDelete={ async () => {
+          if(confirm(`Deseja excluir a categoria ${id} `)) {
+            await del(Number(id));
+            navigate('/Categorias');
+          } }}
         handleClickAdd={async () => {const id = await create('Nova Categoria');navigate(`/Categorias/detalhes/${id}`);}}
       />}  >
 
