@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Box, Button, Paper } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -13,6 +13,7 @@ export const Categories = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
   const { categories, create, del, getByName } = useCategoryContext();
+  const navigate = useNavigate();
   const tableHeaderProps = [
     { label: 'ID', name: 'id' },
     { label: 'Nome', name: 'name' },
@@ -28,7 +29,7 @@ export const Categories = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={ () => { alert('clickei no editar'); console.log(expense.row); } }
+          onClick={ () => { navigate(`detalhes/${expense.row.id}`);} }
         > <Edit />
         </Button>
       ) },
@@ -39,7 +40,11 @@ export const Categories = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={ () => { del(1); console.log(expense.row); } }
+          onClick={ async () => {
+            if(confirm(`Deseja excluir a categoria ${expense.row.name} `)) {
+              await del(expense.row.id);
+            } }
+          }
         > <Delete />
         </Button>
       ) },
@@ -70,15 +75,19 @@ export const Categories = () => {
   return (
     <>
       <LayoutBase title='Postagens' toolBar={<J_ToolBar
-        searchButtonEnabled={isLoading}
-        addButtonEnabled={isLoading}
-        saveButtonEnabled={isLoading}
-        deleteButtonEnabled={isLoading}
+        searchButtonEnabled
+        addButtonEnabled
+        deleteButtonEnabled
+        saveButtonEnabled
+        searchButtonLoading={isLoading}
+        addButtonLoading={isLoading}
+        saveButtonLoading={isLoading}
+        deleteButtonLoading={isLoading}
         addLabelText='Nova Categoria'
         searchText={search}
         handleChangeSearchText={(texto) => setSearchParams({ search: texto }, { replace: true })}
-        handleClickAdd={() => create('Nova Categoria')}
-      />}  >
+        handleClickAdd={async () => {const id = await create('Nova Categoria');navigate(`detalhes/${id}`);}}
+      />}  > {categories.length}
 
         <Box component={Paper} variant='outlined' sx={ { height: 'auto', width: '100%' } }>
           <DataGrid

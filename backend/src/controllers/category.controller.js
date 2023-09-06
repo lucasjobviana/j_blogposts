@@ -14,7 +14,8 @@ const getCategoriesByName = async (req, res, _next) => {
 };
 
 const createCategory = async (req, res, _next) => {
-    const category = await categoryService.createCategory(req.body);
+    const { id: userId } = req.user;
+    const category = await categoryService.createCategory({...req.body,userId});
      
     return res.status(201).json({
         ...category,
@@ -22,10 +23,15 @@ const createCategory = async (req, res, _next) => {
 };
 
 const deleteCategory = async (req, res, _next) => {
+    console.log('controllerdelete')
+    console.log(req.params)
+    console.log(req.user)
     const { id } = req.params;
     const { id: userId } = req.user;
     const category = await categoryService.deleteCategory(id, userId);
-    return res.status(204).json(category);
+    console.log('vou retornar')
+    console.log(category)
+    return res.status(204).json({hasDeleted: true});
 };
 
 module.exports = {

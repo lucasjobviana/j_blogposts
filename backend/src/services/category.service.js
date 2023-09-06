@@ -1,4 +1,4 @@
-const { Category } = require('../models');
+const { Category, User, PostCategory, BlogPost } = require('../models');
 const { createCategoryValidator } = require('./validations');
 const { Op } = require("sequelize");
 
@@ -23,12 +23,25 @@ const getCategoriesByName = async (name) => {
 
 const createCategory = async (category) => {
     createCategoryValidator(category);
-    const createdCategory = await Category.create({ name: category.name });
+    const createdCategory = await Category.create({ name: category.name, userId: category.userId });
     return createdCategory.dataValues;
 };
 
 const deleteCategory = async (id, userId) => {
-    const category = await Category.findOne({ where: { id } });
+    const category = await Category.findOne({ 
+        where: { id },
+        include: [
+            {
+                model: User,
+                as: 'user',
+                attributes: { exclude: ['password'] },
+            },
+        ],
+    });
+    console.log('service delete')
+    console.log('category:',category);
+    console.log('category.user:',category.user)
+    console.log('userId:',userId)
     if (!category) throw new Error('Category does not exist');
     if (category.userId !== userId) throw new Error('Unauthorized user');
     await Category.destroy({ where: { id } });

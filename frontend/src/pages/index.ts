@@ -6,3 +6,4 @@ export * from './Login';
 export * from './Categories';
 export * from './Posts';
 export * from './Profile';
+export * from './DetailCategory';

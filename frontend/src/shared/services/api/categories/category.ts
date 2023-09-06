@@ -9,14 +9,24 @@ export const getAllCategories = async () => {
 };
 
 export const getCategoriesByName = async ({ search }) => {
-  const categories = await api.get(`/categories/name?search=${search}`).then((response) => {
+  const token = JSON.parse(localStorage.getItem('token')) ;
+  const categories = await api.get(`/categories/name?search=${search}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then((response) => {
     return response.data;
   });
   return categories;
 };
 
 export const getCategoryById = async (id: string) => {
-  const category = await api.get(`/categories/${id}`).then((response) => {
+  const token = JSON.parse(localStorage.getItem('token')) ;
+  const category = await api.get(`/categories/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then((response) => {
     return response.data;
   });
   return category;
@@ -24,7 +34,12 @@ export const getCategoryById = async (id: string) => {
 
 export const createCategory = async (category: Category) => {
   try{
-    const newCategory = await api.post('/categories', category).then((response) => {
+    const token = JSON.parse(localStorage.getItem('token')) ;
+    const newCategory = await api.post('/categories', category, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((response) => {
       return response.data;
     });
     return newCategory;
@@ -34,15 +49,30 @@ export const createCategory = async (category: Category) => {
 };
 
 export const updateCategory = async (id: string, category: number) => {
-  const updatedCategory = await api.put(`/categories/${id}`, category).then((response) => {
+  const token = JSON.parse(localStorage.getItem('token')) ;
+  const updatedCategory = await api.put(`/categories/${id}`, category, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then((response) => {
     return response.data;
   });
   return updatedCategory;
 };
 
 export const deleteCategory = async (id: string) => {
-  const deletedCategory = await api.delete(`/categories/${id}`).then((response) => {
+  console.log('id para deletar no api . delete;', id);
+  const token = JSON.parse(localStorage.getItem('token')) ;
+  const deletedCategory = await api.delete(`/categories/${id}`,  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then((response) => {
+    if (response.status === 204) {
+      return true;
+    }
     return response.data;
   });
+  console.log('category deleted:', deletedCategory);
   return deletedCategory;
 };

@@ -16,7 +16,7 @@ const LoginUserContext = createContext({} as ILoginUserContext);
 
 export const LoginUserProvider: React.FC<ILoginUserProviderProps> = ({ children }) => {
   const defaultStorage = mapToDefaultStorage();
-  const [user, setUser] = useState<IUser|null>(null);
+  const [user, setUser] = useState<IUser>(new User('USER', 'USER@GMAIL.COM', 'USERUSER'));
 
   const create = useCallback( async (displayName='USER', email='USER@GMAIL.COM', password='USERUSER', image='https://i.pinimg.com/564x/51/65/bb/5165bbc3564b4296c70371b75c9774b0.jpg') => {
     const newUser = new User(displayName, email, password);
@@ -39,6 +39,7 @@ export const LoginUserProvider: React.FC<ILoginUserProviderProps> = ({ children 
     if(hash) {
       user.hash = hash;
       setUser(user);
+      localStorage.setItem('token', JSON.stringify(hash.token));
       console.log('Usuário logado: ', user);
       return true;
     }
