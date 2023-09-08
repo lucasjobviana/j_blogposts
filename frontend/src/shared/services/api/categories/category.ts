@@ -48,9 +48,9 @@ export const createCategory = async (category: Category) => {
   }
 };
 
-export const updateCategory = async (id: string, category: number) => {
+export const updateCategory = async (category: Category) => {
   const token = JSON.parse(localStorage.getItem('token')) ;
-  const updatedCategory = await api.put(`/categories/${id}`, category, {
+  const updatedCategory = await api.put(`/categories/${category.id}`, category, {
     headers: {
       Authorization: `Bearer ${token}`
     }

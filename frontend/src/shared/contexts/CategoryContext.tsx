@@ -33,8 +33,9 @@ export const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children })
     return false;
   }, [categories]);
 
-  const update = useCallback( (category: Category) => {
-    console.log('update category: ', category);
+  const update = useCallback( async (category: Category) => {
+    const hasUpdated = await defaultStorage('updateCategory', category);
+    console.log('category updated', hasUpdated);
   }, [categories]);
 
   const del = useCallback( async (id: number) => {
@@ -45,6 +46,7 @@ export const CategoryProvider: React.FC<ICategoryProviderProps> = ({ children })
       console.log('category deleted', newCategories);
 
     }
+    console.log('del method deleted', status, status === true);
   }, [categories]);
 
   const getAll = useCallback( () => {

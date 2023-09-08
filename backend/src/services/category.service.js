@@ -7,7 +7,7 @@ const getAllUsers = async () => {
     return categories;
 };
 
-const getCategoriesByName = async (name) => {
+const getCategoriesByName = async (name, userId) => {
     console.log('Service name: ',name);
 
     const categories = await Category.findAll({
@@ -15,6 +15,7 @@ const getCategoriesByName = async (name) => {
             name: {
                 [Op.like]: `%${name}%`,
             },
+            userId,
         },
     });
     return categories;
@@ -46,10 +47,21 @@ const deleteCategory = async (id, userId) => {
     if (category.userId !== userId) throw new Error('Unauthorized user');
     await Category.destroy({ where: { id } });
 };
+
+const updateCategory = async (id, category, userId) => {
+    const { name } = category;
+    const categoryToUpdate = await Category.findOne({ where: { id } });
+    if (!categoryToUpdate) throw new Error('Category does not exist');
+    if (categoryToUpdate.userId !== userId) throw new Error('Unauthorized user');
+    await Category.update({ name }, { where: { id } });
+    const updatedCategory = await Category.findOne({ where: { id } });
+    return updatedCategory;
+};
      
 module.exports = {
     getAllUsers,
     createCategory,
     getCategoriesByName,
     deleteCategory,
+    updateCategory,
 };

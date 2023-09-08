@@ -1,7 +1,8 @@
 import { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory, getCategoriesByName,
   createUser, login } from '../services/api';
+import { createUserLS, loginLS, getCategoriesByNameLS, createCategoryLS, updateCategoryLS, deleteCategoryLS } from '../services/localStorage';
 
-export const mapToDefaultStorage = (usingBD = true) => {
+export const mapToDefaultStorage = (usingBD = false) => {
 
   const mapFunction = (functionName, functionParameter) => {
     if (usingBD) {
@@ -19,7 +20,12 @@ export const mapToDefaultStorage = (usingBD = true) => {
     }
 
     switch (functionName) {
-    // case 'getWorks': return getWorksLS(functionParameter);
+    case 'createUser': return createUserLS(functionParameter);
+    case 'login': return loginLS(functionParameter);
+    case 'getCategoriesByName': return getCategoriesByNameLS(functionParameter);
+    case 'createCategory': return createCategoryLS(functionParameter);
+    case 'updateCategory': return updateCategoryLS(functionParameter);
+    case 'deleteCategory': return deleteCategoryLS(functionParameter);
     default: return null;
     }
   };
