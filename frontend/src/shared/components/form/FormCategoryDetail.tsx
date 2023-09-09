@@ -25,7 +25,7 @@ export const FormCategoryDetail: React.FC<IFormCategoryDetailProps> = ({ childre
         navigate('/Categorias');
       }} >
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 1 }}>
-          <J_TextField name='name' label='Nome' value={category.name} defaultV={'Nova Categoria'}  />
+          <J_TextField name='name' label='Nome' value={category.name} defaultV={category.name}  />
           <Button variant='outlined' type='submit'>Salvar</Button>
           {children}
         </Box>

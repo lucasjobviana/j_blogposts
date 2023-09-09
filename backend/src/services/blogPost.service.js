@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const {Sequelize, Op} = require('sequelize');
 const { BlogPost, Category, User, PostCategory: pc } = require('../models');
 const { createBlogPostValidator, updateBlogPostValidator } = require('./validations');
 const config = require('../config/config');
@@ -15,18 +15,25 @@ const mapBlogPost = (blogPost) => ({
     });
 
 const mapPostCategories = (categories, postId) => categories.map((category) => ({
-    postId,
+    postId, 
     categoryId: category.id,
 }));
 
 const createPost = async (blogPost) => {
+    console.log('Service: ',blogPost);
     const categories = await Category.findAll(
         { where: { id: blogPost.categoryIds } },
     );
+    console.log('categories: ',categories);
+    console.log('categories.length: ',categories.length);
+    console.log('blogPost.categoryIds.length: ',blogPost.categoryIds.length);
+    console.log(blogPost.categoryIds.length !== categories.length)
     if (categories.length !== blogPost.categoryIds.length) {
     throw new Error('one or more "categoryIds" not found'); 
     }
+
     createBlogPostValidator(blogPost);
+    console.log('passei do validator')
     const t = await sequelize.transaction();
      try {
         const createdPost = await BlogPost.create(mapBlogPost(blogPost), { transaction: t });
@@ -36,6 +43,20 @@ const createPost = async (blogPost) => {
     } catch (error) {
         await t.rollback(); throw error;
     }
+};
+
+const getPostsByName = async (name, userId) => {
+    console.log('Service name: ',name);
+
+    const posts = await BlogPost.findAll({
+        where: {
+            title: {
+                [Op.like]: `%${name}%`,
+            },
+            userId,
+        },
+    });
+    return posts;
 };
 
 const getAll = async () => {
@@ -97,4 +118,5 @@ module.exports = {
     updatePost,
     deletePost,
     getByQuery,
+    getPostsByName
 };

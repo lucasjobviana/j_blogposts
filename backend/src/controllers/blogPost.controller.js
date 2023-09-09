@@ -19,6 +19,14 @@ const getAll = async (req, res, _next) => {
     return res.status(200).json(posts);
 };
 
+const getPostsByName = async (req, res, _next) => {
+    console.log('Controller post query: ',req.query);
+    const { id: userId } = req.user;
+    const { search } = req.query;
+    const posts = await blogPostService.getPostsByName(search, userId);
+    return res.status(200).json(posts);
+};
+
 const getById = async (req, res, _next) => {
     const { id } = req.params;
     const post = await blogPostService.getById(id);
@@ -53,4 +61,5 @@ module.exports = {
     updatePost,
     deletePost,
     getByQuery,
+    getPostsByName,
 };
