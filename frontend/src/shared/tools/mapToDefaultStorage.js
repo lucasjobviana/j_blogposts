@@ -2,8 +2,9 @@ import { getAllCategories, getCategoryById, createCategory, updateCategory, dele
   createUser, login, getPostsByName, createPost, deletePost, updatePost } from '../services/api';
 
 import { createUserLS, loginLS, getCategoriesByNameLS, createCategoryLS, updateCategoryLS, deleteCategoryLS } from '../services/localStorage';
+import { getPostsByTitleLS, createPostLS, deletePostLS, updatePostLS } from '../services/localStorage/posts';
 
-export const mapToDefaultStorage = (usingBD = true) => {
+export const mapToDefaultStorage = (usingBD = false) => {
 
   const mapFunction = (functionName, functionParameter) => {
     if (usingBD) {
@@ -31,10 +32,10 @@ export const mapToDefaultStorage = (usingBD = true) => {
     case 'createCategory': return createCategoryLS(functionParameter);
     case 'updateCategory': return updateCategoryLS(functionParameter);
     case 'deleteCategory': return deleteCategoryLS(functionParameter);
-    // case 'getPostsByName': return getPostsByNameLS(functionParameter);
-    // case 'createPost': return createPostLS(functionParameter);
-    // case 'deletePost': return deletePostLS(functionParameter);
-    // case 'updatePost': return updatePostLS(functionParameter);
+    case 'getPostsByName': return getPostsByTitleLS(functionParameter);
+    case 'createPost': return createPostLS(functionParameter);
+    case 'deletePost': return deletePostLS(functionParameter);
+    case 'updatePost': return updatePostLS(functionParameter);
     default: return null;
     }
   };

@@ -27,6 +27,7 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
     const post = new Post(title);
     const newPost = await defaultStorage('createPost', post);
     if(newPost) {
+      console.log('post created_____________', newPost);
       setPosts((posts) => [...posts, newPost]);
       return newPost.id;
     }
@@ -41,7 +42,7 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
   const del = useCallback( async (id: number) => {
     const status = await defaultStorage('deletePost', id);
     if(status  === true) {
-      const newPosts = posts.filter((post) => Number(post.id) !== id);
+      const newPosts = posts.filter((post) => post.id !== id);
       setPosts(newPosts);
       console.log('post deleted', newPosts);
 

@@ -1,7 +1,7 @@
 import { IUser } from './IUser';
 
 export class User implements IUser {
-  id: string;
+  id: number;
   displayName: string;
   email: string;
   password: string;

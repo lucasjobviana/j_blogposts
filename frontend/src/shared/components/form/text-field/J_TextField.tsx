@@ -5,6 +5,8 @@ import { useField } from '@unform/core';
 export interface IJ_TextFieldProps extends BaseTextFieldProps {
   name?: string;
   defaultV?: string;
+  // multiline?: boolean;
+  // maxRows?: number;
 }
 
 export const J_TextField: React.FC<IJ_TextFieldProps> = ({ name, defaultV, ...rest }) => {
