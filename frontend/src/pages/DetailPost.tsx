@@ -44,8 +44,10 @@ export const DetailPost = () => {
         </Box>
 
         <Box component={Paper} variant='outlined' sx={ { height: 'auto', width: '100%' } }>
-
+          {
+            post &&
           <FormPostDetail postId={Number(id)} post={post} user={post.user} />
+          }
         </Box>
       </LayoutBase>
     </>

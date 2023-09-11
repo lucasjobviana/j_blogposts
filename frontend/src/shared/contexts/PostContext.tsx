@@ -6,7 +6,7 @@ import  { mapToDefaultStorage }  from '../tools';
 interface IPostContext  {
     posts: IPost[] | [];
     create: (name: string ) => Promise<boolean>;
-    del: (id: number) => void;
+    del: (id: number) => Promise<boolean>;
     update: (post: Post) => void;
     getAll: () => void;
     getById: (id: number) => void;
@@ -36,6 +36,10 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
 
   const update = useCallback( async (post: Post) => {
     const hasUpdated = await defaultStorage('updatePost', post);
+    if(hasUpdated) {
+      setPosts((posts)=> posts.map((p) => p.id === post.id ? hasUpdated : p));
+      return true;
+    }
     console.log('post updated', hasUpdated);
   }, [posts]);
 
@@ -48,6 +52,7 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
 
     }
     console.log('del method deleted', status, status === true);
+    return status;
   }, [posts]);
 
   const getAll = useCallback( () => {
