@@ -1,32 +1,15 @@
 import { Post } from '../../../Entities';
 
-// export const getAllCategories = async () => {
-//   const categories = await api.get('/categories').then((response) => {
-//     return response.data;
-//   });
-//   return categories;
-// };
-
 export const getPostsByTitleLS = async ({ search }) => {
   const posts = localStorage.getItem('posts_bp') || '[]';
   const postsArray = JSON.parse(posts);
-  const filteredPosts = postsArray.filter((post: Post) => post.title.toLowerCase().includes(search.toLowerCase()));
+  const userId = JSON.parse(localStorage.getItem('loggedUserId_bp'));
+  const filteredPosts = postsArray.filter((post: Post) => post.userId === userId && post.title.toLowerCase().includes(search.toLowerCase()));
   return filteredPosts;
 };
 
-// export const getCategoryById = async (id: string) => {
-//   const token = JSON.parse(localStorage.getItem('token')) ;
-//   const category = await api.get(`/categories/${id}`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   }).then((response) => {
-//     return response.data;
-//   });
-//   return category;
-// };
-
-export const createPostLS = async (post: Post) => {
+export const createPostLS = async (post) => {
+  const now = new Date().toString();
   const posts = localStorage.getItem('posts_bp') || '[]';
   const postsArray = JSON.parse(posts);
   const biggestId = postsArray.reduce((acc, curr) => {
@@ -36,25 +19,32 @@ export const createPostLS = async (post: Post) => {
     return acc;
   }, 0);
   post.id = (biggestId + 1);
+  post.userId = JSON.parse(localStorage.getItem('loggedUserId_bp'));
+  post.user = JSON.parse(localStorage.getItem('users_bp')).find((user) => user.id === post.userId);
+  post.published = now;
+  post.updated = now;
   localStorage.setItem('posts_bp', JSON.stringify([...postsArray, post]));
   return post;
 };
 
-export const updatePostLS = async (post: Post) => {
+export const updatePostLS = async (post) => {
+  const now = new Date().toString();
   const posts = localStorage.getItem('posts_bp') || '[]';
   const postsArray = JSON.parse(posts);
   const postIndex = postsArray.findIndex((c: Post) => c.id == post.id);
+  post.updated = now;
+  post.userId = JSON.parse(localStorage.getItem('loggedUserId_bp'));
+  post.user = JSON.parse(localStorage.getItem('users_bp')).find((user) => user.id === post.userId);
   postsArray[postIndex] = post;
   postsArray[postIndex].id = Number(postsArray[postIndex].id);
   localStorage.setItem('posts_bp', JSON.stringify(postsArray));
   return post;
 };
 
-export const deletePostLS = async (id: string) => {
+export const deletePostLS = async (id: number) => {
   const posts = localStorage.getItem('posts_bp') || '[]';
   const postsArray = JSON.parse(posts);
-  const postIndex = postsArray.findIndex((c: Post) => c.id === Number(id));
-  postsArray.splice(postIndex, 1);
-  localStorage.setItem('categories_bp', JSON.stringify(postsArray));
+  const newPosts = postsArray.filter((c: Post) => c.id !== id);
+  localStorage.setItem('posts_bp', JSON.stringify(newPosts));
   return new Promise((resolve) => resolve(true));
 };

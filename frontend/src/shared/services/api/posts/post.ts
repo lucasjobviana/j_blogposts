@@ -21,7 +21,7 @@ export const getPostsByName = async ({ search }) => {
   return posts;
 };
 
-export const getPostById = async (id: string) => {
+export const getPostById = async (id: number) => {
   const token = JSON.parse(localStorage.getItem('token')) ;
   const post = await api.get(`/post/${id}`, {
     headers: {
@@ -61,7 +61,7 @@ export const updatePost = async (post: Post) => {
   return updatedPost;
 };
 
-export const deletePost = async (id: string) => {
+export const deletePost = async (id: number) => {
   console.log('id para deletar no api .post: delete;', id);
   const token = JSON.parse(localStorage.getItem('token')) ;
   const deletedPost = await api.delete(`/post/${id}`,  {

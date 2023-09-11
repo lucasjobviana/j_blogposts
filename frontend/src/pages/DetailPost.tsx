@@ -1,18 +1,19 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Paper, Typography } from '@mui/material';
-// import { Delete, Edit } from '@mui/icons-material';
 import { LayoutBase } from '../shared/layouts';
 import { J_ToolBar } from '../shared/components/tool-bar';
 import { usePostContext } from '../shared/contexts';
 import { FormPostDetail } from '../shared/components/form';
 
 export const DetailPost = () => {
-  const {  del } = usePostContext();
   const { id='nova' } = useParams<'id'>();
-  const { create, posts } = usePostContext();
+  const { create, posts, del } = usePostContext();
   const navigate = useNavigate();
   const post = posts.find((post) => Number(post.id) === Number(id));
+  console.log('meu pooooooos:', post);
+  console.log('posts do context:');
+  console.log(posts);
 
   const handleDelete = async () => {
     if(confirm(`Deseja excluir a postagem ${id} `)) {
@@ -44,7 +45,7 @@ export const DetailPost = () => {
 
         <Box component={Paper} variant='outlined' sx={ { height: 'auto', width: '100%' } }>
 
-          <FormPostDetail postId={Number(id)} post={post} />
+          <FormPostDetail postId={Number(id)} post={post} user={post.user} />
         </Box>
       </LayoutBase>
     </>

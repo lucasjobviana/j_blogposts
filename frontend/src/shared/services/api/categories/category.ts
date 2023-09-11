@@ -20,7 +20,7 @@ export const getCategoriesByName = async ({ search }) => {
   return categories;
 };
 
-export const getCategoryById = async (id: string) => {
+export const getCategoryById = async (id: number) => {
   const token = JSON.parse(localStorage.getItem('token')) ;
   const category = await api.get(`/categories/${id}`, {
     headers: {
@@ -60,7 +60,7 @@ export const updateCategory = async (category: Category) => {
   return updatedCategory;
 };
 
-export const deleteCategory = async (id: string) => {
+export const deleteCategory = async (id: number) => {
   console.log('id para deletar no api . delete;', id);
   const token = JSON.parse(localStorage.getItem('token')) ;
   const deletedCategory = await api.delete(`/categories/${id}`,  {

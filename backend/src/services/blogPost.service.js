@@ -20,14 +20,10 @@ const mapPostCategories = (categories, postId) => categories.map((category) => (
 }));
 
 const createPost = async (blogPost) => {
-    console.log('Service: ',blogPost);
     const categories = await Category.findAll(
         { where: { id: blogPost.categoryIds } },
     );
-    console.log('categories: ',categories);
-    console.log('categories.length: ',categories.length);
-    console.log('blogPost.categoryIds.length: ',blogPost.categoryIds.length);
-    console.log(blogPost.categoryIds.length !== categories.length)
+
     if (categories.length !== blogPost.categoryIds.length) {
     throw new Error('one or more "categoryIds" not found'); 
     }
@@ -55,7 +51,11 @@ const getPostsByName = async (name, userId) => {
             },
             userId,
         },
+        include: [
+            { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        ],
     });
+    console.log('meu service posts: ',posts);
     return posts;
 };
 
@@ -80,12 +80,12 @@ const getById = async (id) => {
     return post;
 };
 
-const updatePost = async (id, title, content, userId) => {
+const updatePost = async (id, title, content, userId, updated=new Date()) => {
     const post = await BlogPost.findOne({ where: { id } });
     // if (!post) throw new Error('Post does not exist');
     if (post.userId !== userId) throw new Error('Unauthorized user');
     updateBlogPostValidator({ title, content });
-    await BlogPost.update({ title, content }, { where: { id } });
+    await BlogPost.update({ title, content, updated }, { where: { id } });
     const retorno = await getById(id);
     return retorno;
 };

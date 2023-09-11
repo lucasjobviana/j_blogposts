@@ -5,7 +5,7 @@ import { Delete, Edit } from '@mui/icons-material';
 import { DataGrid } from '@mui/x-data-grid';
 import { LayoutBase } from '../shared/layouts';
 import { J_ToolBar } from '../shared/components/tool-bar';
-import { usePostContext } from '../shared/contexts';
+import { usePostContext, useLoginUserContext } from '../shared/contexts';
 import { useDebounce } from '../shared/tools';
 
 export const Posts = () => {
@@ -13,6 +13,9 @@ export const Posts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
   const { posts, create, del, getByName } = usePostContext();
+  const { user } = useLoginUserContext();
+  console.log('este eh meu           user');
+  console.log(user);
   const navigate = useNavigate();
   const tableHeaderProps = [
     { label: 'ID', name: 'id' },
