@@ -13,7 +13,7 @@ export interface IFormPostDetailProps extends IReactRCProps {
   user?: User;
 }
 
-export const FormPostDetail: React.FC<IFormPostDetailProps> = ({ children, postId, post, user, ...rest }) => {
+export const FormPostDetail: React.FC<IFormPostDetailProps> = ({ children, postId, post, user={ displayName:'' }, ...rest }) => {
   const {  update } = usePostContext();
   const navigate = useNavigate();
 
