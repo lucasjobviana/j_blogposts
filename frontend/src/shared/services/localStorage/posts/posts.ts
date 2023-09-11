@@ -8,7 +8,7 @@ export const getPostsByTitleLS = async ({ search }) => {
   return filteredPosts;
 };
 
-export const createPostLS = async (post: Post) => {
+export const createPostLS = async (post) => {
   const now = new Date().toString();
   const posts = localStorage.getItem('posts_bp') || '[]';
   const postsArray = JSON.parse(posts);
@@ -20,19 +20,21 @@ export const createPostLS = async (post: Post) => {
   }, 0);
   post.id = (biggestId + 1);
   post.userId = JSON.parse(localStorage.getItem('loggedUserId_bp'));
+  post.user = JSON.parse(localStorage.getItem('users_bp')).find((user) => user.id === post.userId);
   post.published = now;
   post.updated = now;
   localStorage.setItem('posts_bp', JSON.stringify([...postsArray, post]));
   return post;
 };
 
-export const updatePostLS = async (post: Post) => {
+export const updatePostLS = async (post) => {
   const now = new Date().toString();
   const posts = localStorage.getItem('posts_bp') || '[]';
   const postsArray = JSON.parse(posts);
   const postIndex = postsArray.findIndex((c: Post) => c.id == post.id);
   post.updated = now;
   post.userId = JSON.parse(localStorage.getItem('loggedUserId_bp'));
+  post.user = JSON.parse(localStorage.getItem('users_bp')).find((user) => user.id === post.userId);
   postsArray[postIndex] = post;
   postsArray[postIndex].id = Number(postsArray[postIndex].id);
   localStorage.setItem('posts_bp', JSON.stringify(postsArray));

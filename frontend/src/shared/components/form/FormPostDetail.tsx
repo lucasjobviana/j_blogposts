@@ -26,12 +26,14 @@ export const FormPostDetail: React.FC<IFormPostDetailProps> = ({ children, postI
       <Form {...rest} onSubmit={async (v) => {
         const newPost = new Post(v.title);
         newPost.id = postId;
+        newPost.content = v.content;
         newPost.published = post.published;
         await update(newPost);
         navigate('/Postagens');
       }} >
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 1 }}>
           <J_TextField name='title' label='Título' value={post.title} defaultV={post.title} />
+
           <J_TextField name='content' label='Texto' value={post.content} defaultV={post.content} multiline maxRows={50} rows={15}  />
           <J_TextField name='updated' label='Atualizado em' value={post.updated} defaultV={updatedDateFormated} disabled />
           <J_TextField name='published' label='Criado em' value={post.published} defaultV={publishedDateFormated} disabled />
