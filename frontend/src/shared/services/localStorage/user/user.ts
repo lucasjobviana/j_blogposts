@@ -1,4 +1,6 @@
 import { User } from '../../../Entities';
+import { createCategoryLS } from '../categories';
+import { Category } from '../../../Entities';
 
 export const createUserLS = async (user: User) => {
   const users = localStorage.getItem('users_bp') || '[]';
@@ -21,5 +23,10 @@ export const loginLS = async (user: User) => {
   if(!userFound) return undefined;
   localStorage.setItem('loggedUserId_bp', JSON.stringify(userFound.id));
   const userWithHash = { ...userFound, hash:{ token:'mocked_token' } };
+  const categories = localStorage.getItem('categories_bp') || '[]';
+  const hasCategoryDefault = JSON.parse(categories).find((c)=> c.userId === userFound.id);
+  if(!hasCategoryDefault) {
+    createCategoryLS(new Category('Geral'));
+  }
   return userWithHash;
 };

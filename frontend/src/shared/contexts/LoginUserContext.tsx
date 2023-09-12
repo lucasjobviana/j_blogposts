@@ -18,7 +18,7 @@ export const LoginUserProvider: React.FC<ILoginUserProviderProps> = ({ children 
   const defaultStorage = mapToDefaultStorage();
   const [user, setUser] = useState<IUser>(new User('USER', 'USER@GMAIL.COM', 'USERUSER'));
 
-  const create = useCallback( async (displayName='USER', email='USER@GMAIL.COM', password='USERUSER', image='https://i.pinimg.com/564x/51/65/bb/5165bbc3564b4296c70371b75c9774b0.jpg') => {
+  const create = useCallback( async (displayName='USER', email='USER@GMAIL.COM', password='USERUSER', image:string) => {
     const newUser = new User(displayName, email, password);
     newUser.image = image;
     const hash = await defaultStorage('createUser', newUser);

@@ -5,4 +5,5 @@ export interface IPost {
     published: string;
     updated: string;
     userId: number;
+    categoryIds: number[];
 }

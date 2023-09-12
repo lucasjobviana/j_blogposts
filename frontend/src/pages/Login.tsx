@@ -39,7 +39,7 @@ export const J_Login = () => {
 
   return (
     <Box color={theme.palette.text.primary}  width={'100vw'} height={'100vh'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-      <Box flex={1} width={200} height={'auto'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
+      <Box flex={1}  width={200} height={'auto'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
         {
           createUser && <Box height={theme.spacing(16)} display='flex' alignItems='center' justifyContent='center' >
             <Avatar sx={{ bgcolor: theme.palette.primary.light, width: theme.spacing(8), height:theme.spacing(8) }} src={image} />

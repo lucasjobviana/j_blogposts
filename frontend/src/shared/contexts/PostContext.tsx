@@ -7,7 +7,7 @@ interface IPostContext  {
     posts: IPost[] | [];
     create: (name: string ) => Promise<boolean>;
     del: (id: number) => Promise<boolean>;
-    update: (post: Post) => void;
+    update: (post: Post) => Promise<boolean>;
     getAll: () => void;
     getById: (id: number) => void;
     getByName: (name: string) => Promise<boolean>;
@@ -38,9 +38,8 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
     const hasUpdated = await defaultStorage('updatePost', post);
     if(hasUpdated) {
       setPosts((posts)=> posts.map((p) => p.id === post.id ? hasUpdated : p));
-      return true;
     }
-    console.log('post updated', hasUpdated);
+    return hasUpdated;
   }, [posts]);
 
   const del = useCallback( async (id: number) => {
@@ -49,7 +48,6 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
       const newPosts = posts.filter((post) => post.id !== id);
       setPosts(newPosts);
       console.log('post deleted', newPosts);
-
     }
     console.log('del method deleted', status, status === true);
     return status;
@@ -61,6 +59,8 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
 
   const getByName = useCallback( async (name: string) => {
     const posts = await defaultStorage('getPostsByName', { search:name });
+    console.log('get by name do context: __________                 ');
+    console.log(posts);
     if(posts) {
       setPosts(posts);
       return true;

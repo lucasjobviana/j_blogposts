@@ -36,7 +36,7 @@ export const getPostById = async (id: number) => {
 export const createPost = async (post: Post) => {
   try{
     const token = JSON.parse(localStorage.getItem('token')) ;
-    const newPost = await api.post('/post', { ...post, categoryIds:[1] }, {
+    const newPost = await api.post('/post', { ...post }, {
       headers: {
         Authorization: `Bearer ${token}`
       }

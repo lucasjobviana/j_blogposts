@@ -11,9 +11,6 @@ export const DetailPost = () => {
   const { create, posts, del } = usePostContext();
   const navigate = useNavigate();
   const post = posts.find((post) => Number(post.id) === Number(id));
-  console.log('meu pooooooos:', post);
-  console.log('posts do context:');
-  console.log(posts);
 
   const handleDelete = async () => {
     if(confirm(`Deseja excluir a postagem ${id} `)) {

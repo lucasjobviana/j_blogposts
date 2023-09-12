@@ -20,7 +20,7 @@ export const FormCategoryDetail: React.FC<IFormCategoryDetailProps> = ({ childre
     return (
       <Form {...rest} onSubmit={async (v) => {
         const category = new Category(v.name);
-        category.id = categoryId;
+        category.id = Number(categoryId);
         await update(category);
         navigate('/Categorias');
       }} >

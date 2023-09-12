@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Category } = require('../models');
 const { loginValidator, createUserValidator } = require('./validations');
 const getNewToken = require('../auth');
 
@@ -36,14 +36,14 @@ const getAllUsers = async () => {
 };
 
 const createUser = async (user) => {
-    console.log('service', user);
     createUserValidator(user);
     const userExists = await getUserByEmail(user.email);
     if (userExists) throw Error('User already registered');
     const createdUser = await User.create({ 
         password: user.password, email: user.email, displayName: user.displayName, image: user.image
      });
-    const { password, ...userWithOutPassword } = createdUser.dataValues;
+    await Category.create({ name: 'Geral', userId: createdUser.id });
+     const { password, ...userWithOutPassword } = createdUser.dataValues;
     return getNewToken(userWithOutPassword);
 };
 
