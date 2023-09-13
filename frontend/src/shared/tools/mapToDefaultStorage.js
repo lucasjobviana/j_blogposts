@@ -4,7 +4,7 @@ import { getAllCategories, getCategoryById, createCategory, updateCategory, dele
 import { createUserLS, loginLS, getCategoriesByNameLS, createCategoryLS, updateCategoryLS, deleteCategoryLS } from '../services/localStorage';
 import { getPostsByTitleLS, createPostLS, deletePostLS, updatePostLS } from '../services/localStorage/posts';
 
-export const mapToDefaultStorage = (usingBD = true) => {
+export const mapToDefaultStorage = (usingBD = false) => {
 
   const mapFunction = (functionName, functionParameter) => {
     if (usingBD) {
