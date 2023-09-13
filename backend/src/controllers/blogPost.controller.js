@@ -2,7 +2,7 @@ const blogPostService = require('../services/blogPost.service');
 
 const createPost = async (req, res, _next) => {
     const actualDate = new Date();
-    console.log('Controller post: ',req.body);
+
     const createdPost = await blogPostService.createPost({ 
         ...req.body, 
         userId: req.user.id,
@@ -35,10 +35,11 @@ const getById = async (req, res, _next) => {
 };
 
 const updatePost = async (req, res, _next) => {
+    console.log(req.body.content)
     const { id } = req.params;
-    const { title, content, categoryIds=[0] } = req.body;
+    const { title, content, categories=[0] } = req.body;
     const { id: userId } = req.user;
-    const updatedPost = await blogPostService.updatePost({id, title, content, userId, categoryIds});
+    const updatedPost = await blogPostService.updatePost({id, title, content, userId, categories});
     return res.status(200).json(updatedPost);
 };
 

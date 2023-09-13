@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import { Add, ArrowBack, Delete, Save, Search } from '@mui/icons-material';
 import { J_Skeleton } from '../../tools';
 
@@ -46,20 +45,20 @@ export const J_ToolBar: React.FC<IJ_ToolBarProps> = ({
   deleteButtonEnabled = false,
   handleClickDelete: handleClickDelete = (target) => console.log('HandleClickDelete: ', target),
 }) => {
-  const theme = useTheme();
+
   const navigate = useNavigate();
 
   return (
-    <Box>
+    <Box >
 
-      <Typography variant={'h6'} whiteSpace={'nowrap'} display={'flex'} flexDirection={'row'} alignItems={'center'} justifyContent={'end'} paddingRight={1} paddingY={3} height={theme.spacing(5)} component={Paper} gap={1} >
+      <Typography variant={'h6'} whiteSpace={'nowrap'} paddingBottom ={1} display={'flex'} flexDirection={'row'} alignItems={'center'} justifyContent={'end'} flexWrap={'wrap'} paddingRight={1}  component={Paper} gap={1} >
 
         {
           searchButtonEnabled &&
         <Box flex={1} display={'flex'} alignItems={'center'}>
-          <TextField  sx={{ marginRight:0.5, minWidth:'100px' }} label='Pesquisar' variant='filled' size='small' fullWidth value={searchText} onChange={(e) => handleChangeSearchText(e.target.value)} />
+          <TextField  sx={{ marginRight:0.5, minWidth:'200px' }} label='Pesquisar' variant='filled' size='small' fullWidth value={searchText} onChange={(e) => handleChangeSearchText(e.target.value)} />
           <J_Skeleton isLoading={searchButtonLoading} >
-            <Button  size='small' variant='contained' color='primary' startIcon={<Search />} />
+            <Button size='small' variant='contained' color='primary' startIcon={<Search />} />
           </J_Skeleton>
         </Box>
         }
@@ -99,7 +98,7 @@ export const J_ToolBar: React.FC<IJ_ToolBarProps> = ({
 
         {
           backButtonEnabled &&
-          <Box   >
+          <Box >
             <Button size='small' variant='outlined' color='primary' startIcon={<ArrowBack />} onClick={()=> navigate(backTo)}  >
               {'Voltar'}
             </Button>

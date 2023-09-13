@@ -27,6 +27,7 @@ export const createPostLS = async (post) => {
     localStorage.getItem('categories_bp')
   ).filter((category) => category.userId === post.userId)[0]];
   localStorage.setItem('posts_bp', JSON.stringify([...postsArray, post]));
+  console.log('coloquei a merda da categoria ', post.categories, ' no post ', post);
   return post;
 };
 
@@ -40,7 +41,10 @@ export const updatePostLS = async (post) => {
   post.user = JSON.parse(localStorage.getItem('users_bp')).find((user) => user.id === post.userId);
   postsArray[postIndex] = post;
   postsArray[postIndex].id = Number(postsArray[postIndex].id);
-  post.categories = [{ id:post. categoryIds }] || [JSON.parse(
+  console.log('coloquei a porra do editar da categoria ', post.categories, ' no post ', post);
+  const newCategory = JSON.parse( localStorage.getItem('categories_bp')).filter((c)=> c.id === post.categories);
+  console.log('nem category', newCategory );
+  post.categories = newCategory  || [JSON.parse(
     localStorage.getItem('categories_bp')
   ).filter((category) => category.userId === post.userId)[0]];
   localStorage.setItem('posts_bp', JSON.stringify(postsArray));

@@ -15,7 +15,7 @@ export const Posts = () => {
   const { posts, create, del, getByName } = usePostContext();
   const { user } = useLoginUserContext();
   console.log(user);
-  console.log(posts);
+
   const navigate = useNavigate();
   const tableHeaderProps = [
     { label: 'ID', name: 'id' },

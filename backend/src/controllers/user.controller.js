@@ -2,6 +2,9 @@ const loginService = require('../services/user.service');
 const userService = require('../services/user.service');
 
 const login = async (req, res, _next) => {
+    console.log('diabo de merda')
+    console.log(req.body)
+     
     const token = await loginService.login(req.body);
     if (token) { 
         return res.status(200).json({
@@ -22,7 +25,6 @@ const getUserById = async (req, res, _next) => {
 };
 
 const createUser = async (req, res, _next) => {
-    console.log('controller', req.body);
     const token = await userService.createUser(req.body); 
     if (token) {
         return res.status(201).json({

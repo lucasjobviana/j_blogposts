@@ -16,7 +16,6 @@ export const J_AutoCompleteField: React.FC<IJ_AutoCompleteFieldProps> = ({ name,
   const [value, setValue] = useState(defaultV);
   const { getByName, categories } = useCategoryContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  console.log('J_TextField', name, fieldName, defaultV, value);
 
   useEffect(() => {
     registerField({
@@ -40,20 +39,6 @@ export const J_AutoCompleteField: React.FC<IJ_AutoCompleteFieldProps> = ({ name,
 
   return (
     <>
-      {/* <TextField
-        name={name}
-        {...rest}
-        value={value}
-        defaultValue={defaultValue}
-        onChange={(e) => {
-          setValue(e.target.value);
-          error && clearError();
-        }}
-        error={!!error}
-        helperText={error}
-        variant='filled'
-        size='small' fullWidth
-      /> */}
       <J_Skeleton isLoading={isLoading} >
         <Autocomplete
           componentName=''

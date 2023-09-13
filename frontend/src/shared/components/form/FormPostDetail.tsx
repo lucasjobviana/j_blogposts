@@ -18,8 +18,7 @@ export const FormPostDetail: React.FC<IFormPostDetailProps> = ({ children, postI
   const {  update } = usePostContext();
   const navigate = useNavigate();
 
-  if(post) {console.log('meu post no formulario');
-    console.log(post);
+  if(post) {
     const publishedDateFormated = `${new Date(post.published).toLocaleDateString('pt-BR')} - ${new Date(post.published).toLocaleTimeString('pt-BR')}`;
     const updatedDateFormated = `${new Date(post.updated).toLocaleDateString('pt-BR')} - ${new Date(post.updated).toLocaleTimeString('pt-BR')}`;
 
@@ -28,7 +27,7 @@ export const FormPostDetail: React.FC<IFormPostDetailProps> = ({ children, postI
         const newPost = new Post(v.title);
         newPost.id = postId;
         newPost.content = v.content;
-        newPost.categoryIds = v.categoryIds;
+        newPost.categories = v.categoryIds;
         newPost.published = post.published;
         await update(newPost);
         navigate('/Postagens');

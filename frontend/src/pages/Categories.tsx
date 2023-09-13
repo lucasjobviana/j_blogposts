@@ -19,7 +19,7 @@ export const Categories = () => {
     { label: 'Nome', name: 'name' },
   ];
   const tableHeaders = tableHeaderProps.map((header) => ({
-    field: header.name, headerName: header.label, editable: true,
+    field: header.name, headerName: header.label, editable: false, width: 150
   }));
   const tableHeadersWithButtons = [...tableHeaders,
     { field: 'btnEdit',
@@ -53,6 +53,7 @@ export const Categories = () => {
   const tableRowProps = categories.map((category) => ({
     id: category.id,
     name: category.name,
+
   }));
 
   const getDataFromStorage = async (name) => {
@@ -74,7 +75,7 @@ export const Categories = () => {
 
   return (
     <>
-      <LayoutBase title='Postagens' toolBar={<J_ToolBar
+      <LayoutBase title='Categorias' toolBar={<J_ToolBar
         searchButtonEnabled
         addButtonEnabled
         deleteButtonEnabled

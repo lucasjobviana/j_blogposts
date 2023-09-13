@@ -20,49 +20,7 @@ const mapPostCategories = (categories, postId) => categories.map((category) => (
     categoryId: category.id,
 }));
 
-const createPost = async (blogPost, userId) => {
-    console.log('service blogPost: ',blogPost);
-    let categories = [];
-    if(blogPost.categoryIds[0] === 0) {
-         categories = await Category.findAll(
-        {
-            where: {name: 'Geral', userId}
-
-        });
-    }else{
-         categories = await Category.findAll(
-        { 
-                where: { id: blogPost.categoryIds, userId }
-
-         },
-        );
-
-    }
-
-
-    if (categories.length !== blogPost.categoryIds.length) {
-    throw new Error('one or more "categoryIds" not found'); 
-    }
-
-    createBlogPostValidator(blogPost);
-    const t = await sequelize.transaction();
-     try {
-        const createdPost = await BlogPost.create(mapBlogPost(blogPost), { transaction: t });
-        await pc.bulkCreate(mapPostCategories(categories, createdPost.id), { transaction: t });
-        await t.commit();
-        createdPost.dataValues.categories = [categories[0].dataValues];
-       
-        const retorno = await createdPost.dataValues;
-        console.log(retorno)
-        return retorno;
-    } catch (error) {
-        await t.rollback(); throw error;
-    }
-};
-
 const getPostsByName = async (name, userId) => {
-    console.log('Service name: ',name);
-
     const posts = await BlogPost.findAll({
         where: {
             title: {
@@ -75,8 +33,6 @@ const getPostsByName = async (name, userId) => {
             { model: Category, as: 'categories', through: { attributes: [] } },
         ],
     });
-    console.log('______________________________________________________________________')
-    console.log('meu service posts: ',posts);
     return posts;
 };
 
@@ -101,31 +57,80 @@ const getById = async (id) => {
     return post;
 };
 
-const updatePost = async ({id, title, content, userId, categoryIds, updated=new Date()}) => {
-    const post = await BlogPost.findOne({ where: { id } });
-    // if (!post) throw new Error('Post does not exist');
-    if (post.userId !== userId) throw new Error('Unauthorized user');
-    updateBlogPostValidator({ title, content });
-    await BlogPost.update({ title, content, updated }, { where: { id } });
-    const retorno = await getById(id);
-    let categories = [];
-    if(categoryIds[0] === 0) {
-         categories = await Category.findAll(
+const createPost = async (blogPost, userId) => {
+    let cat = [];
+    
+    if(blogPost.categories[0] === 0) {
+         cat = await Category.findOne(
         {
-            where: {name: 'Geral', userId}
+            where: {userId}
 
         });
     }else{
-         categories = await Category.findAll(
+         cat = await Category.findAll(
         { 
-                where: { id: categoryIds, userId }
+                where: { id: blogPost.categoryIds, userId }
+
+         },
+        );
+    }
+
+    if (cat.length && cat.length !== blogPost.categories.length) {
+    throw new Error('one or more "categoryIds" not found'); 
+    }
+
+    createBlogPostValidator(blogPost);
+    const t = await sequelize.transaction();
+     try {
+        const createdPost = await BlogPost.create(mapBlogPost(blogPost), { transaction: t });
+        await pc.bulkCreate(mapPostCategories([cat], createdPost.id), { transaction: t });
+        await t.commit();
+        createdPost.dataValues.categories = [cat.dataValues];
+        const retorno = createdPost.dataValues;
+        return retorno;
+    } catch (error) {
+        await t.rollback(); throw error;
+    }
+};
+
+const updatePost = async ({id, title, content, userId, categories, updated=new Date()}) => {
+    console.log(content)
+    const post = await BlogPost.findOne({ where: { id } });
+
+    // if (!post) throw new Error('Post does not exist');
+    if (post.userId !== userId) throw new Error('Unauthorized user');
+
+    updateBlogPostValidator({ title, content });
+    console.log('jaaaaaaa')
+    await BlogPost.update({ title, content, updated }, { where: { id } });
+    console.log('jaaaaaaa')
+    const retorno = await getById(id);
+    let cat = [];
+
+    if(categories[0] === 0) {
+        console.log(    'eh zero porra')
+         cat = await Category.findAll(
+        {
+            where: { userId}
+
+        });
+    }else{
+        console.log('nao eh zero')
+        console.log(categories)
+         cat = await Category.findAll(
+        { 
+                where: { id: categories, userId }/////////////////
 
          },
         );
 
     }
-
-    await pc.update({ categoryId:categories[0].id  }, { where: { postId:id } });
+    console.log('jaaaaaaa')
+    console.log(categories)
+    console.log(cat)
+   
+    await pc.update({ categoryId:cat[0].id  }, { where: { postId:id } });
+    console.log('jaaaaaaa')
     return retorno;
 };
 

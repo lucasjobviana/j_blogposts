@@ -28,7 +28,8 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
     const newPost = await defaultStorage('createPost', post);
     if(newPost) {
       console.log('post created_____________', newPost);
-      setPosts((posts) => [...posts, newPost]);
+      // setPosts((posts) => [...posts, newPost]);
+      setPosts((posts)=> posts.map((p) => p.id === post.id ? newPost : p));
       return newPost.id;
     }
     return false;
@@ -37,6 +38,8 @@ export const PostProvider: React.FC<IPostProviderProps> = ({ children }) => {
   const update = useCallback( async (post: Post) => {
     const hasUpdated = await defaultStorage('updatePost', post);
     if(hasUpdated) {
+      console.log('post updated_____________', hasUpdated);
+
       setPosts((posts)=> posts.map((p) => p.id === post.id ? hasUpdated : p));
     }
     return hasUpdated;

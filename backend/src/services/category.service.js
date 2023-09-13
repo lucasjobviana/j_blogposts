@@ -8,8 +8,6 @@ const getAllUsers = async () => {
 };
 
 const getCategoriesByName = async (name, userId) => {
-    console.log('Service name: ',name);
-
     const categories = await Category.findAll({
         where: {
             name: {
@@ -39,10 +37,7 @@ const deleteCategory = async (id, userId) => {
             },
         ],
     });
-    console.log('service delete')
-    console.log('category:',category);
-    console.log('category.user:',category.user)
-    console.log('userId:',userId)
+
     if (!category) throw new Error('Category does not exist');
     if (category.userId !== userId) throw new Error('Unauthorized user');
     await Category.destroy({ where: { id } });

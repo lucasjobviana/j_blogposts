@@ -3,9 +3,9 @@ import { Home, Category, Person, Article, Info, Build } from '@mui/icons-materia
 
 const defaultDrawerOptions = [
   {
-    label: 'Home',
+    label: 'Blog',
     icon: <Home />,
-    path: '/'
+    path: '/Blog'
   },
   {
     label: 'Categorias',

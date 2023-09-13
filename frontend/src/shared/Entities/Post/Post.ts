@@ -7,11 +7,11 @@ export class Post implements IPost {
   published: string;
   updated: string;
   userId: number;
-  categoryIds: number[];
+  categories: number[];
 
   constructor (title: string) {
     this.title = title;
     this.content = 'Counteúdo';
-    this.categoryIds = [0];
+    this.categories = [0];
   }
 }
