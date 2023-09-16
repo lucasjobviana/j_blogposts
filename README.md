@@ -1,4 +1,4 @@
-[# Gerencidor de Blog - Lucas Job Viana](https://lucasjobviana.github.io/j_blogposts/)
+[# Gerenciador de Blog - Lucas Job Viana](https://lucasjobviana.github.io/j_blogposts/)
 
 Olá, este repósitorio é para armazenar o meu projeto blogposts, um gerênciador de postagens para blog. Clique no link acima para acessa-lo. 
 
